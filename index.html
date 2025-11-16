@@ -1,11 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Receitas Animadas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #ffe0b2, #ffccbc);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+
+        .recipes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+
+        .recipe-card {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .recipe-card:nth-child(1) { animation-delay: 0.2s; }
+        .recipe-card:nth-child(2) { animation-delay: 0.4s; }
+        .recipe-card:nth-child(3) { animation-delay: 0.6s; }
+        .recipe-card:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+
+        .recipe-card:hover {
+            transform: scale(1.05);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .recipe-card:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .recipe-content {
+            padding: 15px;
+            text-align: center;
+            animation: fadeInText 1s forwards;
+            opacity: 0;
+        }
+
+        .recipe-card:hover .recipe-content {
+            animation: fadeInText 0.5s forwards;
+        }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .recipe-content h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .recipe-content p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        footer {
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%;
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ff6f61;
+        }
+
+        .modal-content h2 {
+            margin: 15px 0 10px 0;
+        }
+
+        .modal-content p {
+            font-size: 15px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    
+
+    <header>
+        <h1>Receitas Animadas</h1>
+    </header>
+
+    <div class="recipes-container">
+        <div class="recipe-card" data-title="Panqueca de Banana" data-desc="Deliciosa panqueca saudável, perfeita para o café da manhã." data-img="https://tse1.mm.bing.net/th/id/OIP.lxtrvfRDySFiXtqY5m7EYgHaFD?rs=1&pid=ImgDetMain&o=7&rm=3">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.lxtrvfRDySFiXtqY5m7EYgHaFD?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Panqueca de Banana">
+            <div class="recipe-content">
+                <h3>Panqueca de Banana</h3>
+                <p>Deliciosa panqueca saudável, perfeita para o café da manhã.</p>
+            </div>
+        </div>
+
+        <div class="recipe-card" data-title="Salada Colorida" data-desc="Uma salada fresca e nutritiva para o almoço ou jantar." data-img="https://tse1.mm.bing.net/th/id/OIP.mowvHUeKj_K7yRTn0J8XUwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.mowvHUeKj_K7yRTn0J8XUwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Salada Colorida">
+            <div class="recipe-content">
+                <h3>Salada Colorida</h3>
+                <p>Uma salada fresca e nutritiva para o almoço ou jantar.</p>
+            </div>
+        </div>
+
+        <div class="recipe-card" data-title="Bolo de Chocolate" data-desc="Bolo fofinho e irresistível para os amantes de chocolate." data-img="https://tse3.mm.bing.net/th/id/OIP.bCOjUPbY72t_P-Qroz4rXgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3">
+            <img src="https://tse3.mm.bing.net/th/id/OIP.bCOjUPbY72t_P-Qroz4rXgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Bolo de Chocolate">
+            <div class="recipe-content">
+                <h3>Bolo de Chocolate</h3>
+                <p>Bolo fofinho e irresistível para os amantes de chocolate.</p> <br>
+                <strong>Ingredientes</strong>
+            </div>
+        </div>
+
+        <div class="recipe-card" data-title="Sushi Caseiro" data-desc="Sushi fácil de preparar, ideal para um jantar especial." data-img="https://tse1.mm.bing.net/th/id/OIP.sCcUiLLPHBCKIu3d2Br98wHaE8?rs=1&pid=ImgDetMain&o=7&rm=3">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.sCcUiLLPHBCKIu3d2Br98wHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sushi Caseiro">
+            <div class="recipe-content">
+                <h3>Sushi Caseiro</h3>
+                <p>Sushi fácil de preparar, ideal para um jantar especial.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modalImg" src="" alt="Receita">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDesc"></p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Receitas Animadas
+        <br>
+        &copy; Dev Douglas Rodrigues
+    </footer>
+
+    <script>
+        const modal = document.getElementById('recipeModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const closeBtn = document.querySelector('.close');
+
+        // Adiciona clique em cada card
+        document.querySelectorAll('.recipe-card').forEach(card => {
+            card.addEventListener('click', () => {
+                modal.style.display = 'block';
+                modalImg.src = card.dataset.img;
+                modalTitle.textContent = card.dataset.title;
+                modalDesc.textContent = card.dataset.desc;
+            });
+        });
+
+        // Fecha o modal
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Fecha o modal se clicar fora do conteúdo
+        window.addEventListener('click', (e) => {
+            if(e.target === modal){
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+
 </body>
 </html>
